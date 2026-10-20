@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-cream font-sans text-ink antialiased;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-serif;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-[1280px] px-6 lg:px-12;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-md px-5 py-3 font-label text-[12px] font-semibold uppercase tracking-[0.06em] transition;
+  }
+  .btn-primary {
+    @apply btn bg-moss text-white shadow-sm hover:bg-moss-dark;
+  }
+  .btn-soft {
+    @apply btn bg-stone text-ink hover:bg-line;
+  }
+  .btn-light {
+    @apply btn bg-white text-moss-dark hover:bg-cream;
+  }
+
+  .eyebrow {
+    @apply font-label text-[11px] font-semibold uppercase tracking-[0.12em] text-moss-dark;
+  }
+  .badge {
+    @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 font-label text-[10px] font-semibold uppercase tracking-[0.08em];
+  }
+  .card {
+    @apply rounded-xl bg-white shadow-card;
+  }
+  .field-label {
+    @apply mb-2 block font-label text-[11px] font-semibold uppercase tracking-[0.06em] text-ink;
+  }
+  .field {
+    @apply w-full rounded-lg bg-stone px-4 py-3.5 text-[14px] font-medium text-ink outline-none ring-moss/30 transition placeholder:text-muted/60 focus:ring-2;
+  }
+}
