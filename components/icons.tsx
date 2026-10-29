@@ -1,0 +1,76 @@
+import {
+  Banknote,
+  CalendarCheck,
+  CalendarClock,
+  Camera,
+  Clapperboard,
+  ClipboardList,
+  Clock,
+  Cloud,
+  Film,
+  GraduationCap,
+  Gavel,
+  Heart,
+  History,
+  Hourglass,
+  Image as ImageIcon,
+  ListChecks,
+  Lock,
+  MapPin,
+  MessageSquareText,
+  Palette,
+  Sparkles,
+  Split,
+  Sun,
+  Tag,
+  Truck,
+  User,
+  Users,
+  Video,
+  Zap,
+  type LucideIcon,
+} from "lucide-react";
+
+const map: Record<string, LucideIcon> = {
+  banknote: Banknote,
+  calendar: CalendarClock,
+  calendarCheck: CalendarCheck,
+  camera: Camera,
+  checklist: ListChecks,
+  clock: Clock,
+  cloud: Cloud,
+  drive: Cloud,
+  film: Film,
+  gavel: Gavel,
+  graduation: GraduationCap,
+  heart: Heart,
+  history: History,
+  hourglass: Hourglass,
+  image: ImageIcon,
+  lock: Lock,
+  message: MessageSquareText,
+  palette: Palette,
+  sparkles: Sparkles,
+  split: Split,
+  spot: MapPin,
+  sun: Sun,
+  tag: Tag,
+  truck: Truck,
+  user: User,
+  users: Users,
+  video: Video,
+  zap: Zap,
+  clipboard: ClipboardList,
+  clapper: Clapperboard,
+};
+
+export function Icon({
+  name,
+  className = "h-4 w-4",
+}: {
+  name: string;
+  className?: string;
+}) {
+  const Cmp = map[name] ?? Sparkles;
+  return <Cmp aria-hidden className={className} />;
+}

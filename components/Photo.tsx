@@ -4,13 +4,20 @@ type PhotoProps = {
   name: ImageKey;
   alt: string;
   className?: string;
+  /** Kelas gradien untuk placeholder bila foto belum diisi di lib/images.ts. */
+  fallback?: string;
 };
 
 /**
  * Menampilkan foto dari /public/images bila sudah diisi di lib/images.ts.
- * Jika belum, tampil blok gradien hangat sebagai placeholder.
+ * Jika belum, tampil blok gradien sebagai placeholder.
  */
-export default function Photo({ name, alt, className = "" }: PhotoProps) {
+export default function Photo({
+  name,
+  alt,
+  className = "",
+  fallback = "from-[#C9A878] via-[#8A7456] to-[#4B4A3A]",
+}: PhotoProps) {
   const src = images[name];
 
   if (src) {
@@ -22,7 +29,7 @@ export default function Photo({ name, alt, className = "" }: PhotoProps) {
     <div
       role="img"
       aria-label={alt}
-      className={`bg-gradient-to-br from-[#C9A878] via-[#8A7456] to-[#4B4A3A] ${className}`}
+      className={`bg-gradient-to-br ${fallback} ${className}`}
     />
   );
 }

@@ -1,24 +1,18 @@
 import type { Metadata } from "next";
-import { Montserrat, Outfit, Playfair_Display } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import Footer from "@/components/Footer";
-import Navbar from "@/components/Navbar";
+import Header from "@/components/Header";
 import "./globals.css";
 
-const playfair = Playfair_Display({
+const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  variable: "--font-playfair",
-  style: ["normal", "italic"],
-});
-const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  variable: "--font-montserrat",
+  variable: "--font-jakarta",
 });
 
 export const metadata: Metadata = {
-  title: "Seraye Moments — Karna Setiap Momen Patut Dirayakan",
+  title: "Seraye Moments — Dokumentasi Wisuda Outdoor & Event Digital",
   description:
-    "Boutique photography & videography studio collective untuk wisuda, perayaan, dan momen personal Anda.",
+    "Booking sesi foto & video wisuda outdoor langsung via WhatsApp Bisnis. Lihat pricelist, gaya visual, status slot fotografer, dan syarat ketentuan.",
 };
 
 export default function RootLayout({
@@ -27,12 +21,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="id"
-      className={`${playfair.variable} ${outfit.variable} ${montserrat.variable}`}
-    >
+    <html lang="id" className={jakarta.variable}>
       <body>
-        <Navbar />
+        <Header />
         <main>{children}</main>
         <Footer />
       </body>
