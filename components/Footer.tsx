@@ -1,94 +1,63 @@
-import { CalendarDays } from "lucide-react";
-import Link from "next/link";
+import { Camera, MessageSquareText, Video } from "lucide-react";
+import { footerColumns } from "@/lib/data";
 
-const explorations = [
-  "Graduation Gallery",
-  "Editorial Portraits",
-  "Intimate Nuptials",
-  "Archival Films",
-];
-const studio = [
-  { label: "Curated Packages & Investment", href: "/services" },
-  { label: "Philosophy & Ethos", href: "/#pilar" },
-  { label: "Inquiry & Reserve Date", href: "/booking" },
-  { label: "Client Proofing Vault", href: "/client-portal" },
+const socials = [
+  { label: "WhatsApp", icon: MessageSquareText },
+  { label: "Foto", icon: Camera },
+  { label: "Video", icon: Video },
 ];
 
 export default function Footer() {
   return (
-    <footer className="bg-sand">
-      <div className="container-page pb-12 pt-16">
-        <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1.3fr]">
+    <footer className="border-t border-line bg-panel pb-12 pt-16">
+      <div className="container-page">
+        <div className="grid gap-10 lg:grid-cols-[1.3fr_1fr_1fr_1fr]">
           <div>
-            <p className="font-serif text-[22px] font-bold">Seraye Moments</p>
-            <p className="mt-3 max-w-[360px] text-[14px] leading-relaxed text-muted">
-              Boutique photography &amp; videography studio collective crafting
-              tangible, timeless keepsakes for graduations, weddings, and
-              personal milestones.
+            <p className="text-[26px] font-extrabold uppercase leading-none tracking-tight text-ink">
+              Seraye Moments
             </p>
-            <p className="mt-5 flex items-center gap-2 font-label text-[11px] font-semibold uppercase tracking-wide">
-              <span className="h-2 w-2 rounded-full bg-moss" />
-              Studio open: Sen — Sab, 09:00 – 18:00 WIB
+            <p className="mt-4 max-w-[340px] text-[14px] leading-6">
+              Dokumentasi wisuda editorial, candid, dan liputan event outdoor
+              on-location di kampus ternama. Mengabadikan kilas bahagia
+              kelulusan menjadi karya digital beresolusi tinggi. Inisiasi alumni
+              S1 TI Telkom University.
             </p>
-          </div>
-
-          <div>
-            <h4 className="font-label text-[12px] font-bold uppercase tracking-wider">
-              Explorations
-            </h4>
-            <ul className="mt-4 space-y-3 text-[13px] text-muted">
-              {explorations.map((item) => (
-                <li key={item}>{item}</li>
+            <div className="mt-6 flex gap-3">
+              {socials.map(({ label, icon: Ic }) => (
+                <span
+                  key={label}
+                  role="img"
+                  aria-label={label}
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-line bg-white text-ink"
+                >
+                  <Ic aria-hidden className="h-4 w-4" />
+                </span>
               ))}
-            </ul>
+            </div>
           </div>
 
-          <div>
-            <h4 className="font-label text-[12px] font-bold uppercase tracking-wider">
-              The Studio
-            </h4>
-            <ul className="mt-4 space-y-3 text-[13px] text-muted">
-              {studio.map((item) => (
-                <li key={item.label}>
-                  <Link href={item.href} className="hover:text-moss-dark">
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-label text-[12px] font-bold uppercase tracking-wider">
-              Studio Atelier
-            </h4>
-            <p className="mt-4 text-[13px] leading-relaxed text-muted">
-              Jl. Kemang Timur No. 42B, Bangka, Mampang Prapatan, Jakarta
-              Selatan 12730
-            </p>
-            <p className="mt-3 text-[13px] text-muted">halo@serayemoments.com</p>
-            <Link
-              href="/booking"
-              className="mt-4 inline-flex items-center gap-2 font-label text-[11px] font-semibold uppercase tracking-wide text-moss-dark"
-            >
-              <CalendarDays size={14} />
-              Schedule a studio visit
-            </Link>
-          </div>
+          {footerColumns.map((col) => (
+            <div key={col.title}>
+              <h3 className="font-sans text-[12px] font-bold uppercase tracking-[0.06em] text-ink">
+                {col.title}
+              </h3>
+              <ul className="mt-4 space-y-2.5 text-[13px] leading-5">
+                {col.items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
-        <div className="mt-14 flex flex-col gap-4 text-[12px] text-muted md:flex-row md:items-center md:justify-between">
-          <p className="font-label font-semibold">
-            <em className="font-serif font-bold italic text-moss-dark">
-              “Karna Setiap Momen Patut Dirayakan”
-            </em>{" "}
-            — © 2025 Seraye Moments Studio. All rights reserved.
+        <div className="mt-14 flex flex-col gap-3 text-[13px] sm:flex-row sm:items-center sm:justify-between">
+          <p>
+            © 2026 Seraye Moments Indonesia. Inisiasi Alumni S1 TI Telkom
+            University. All rights reserved.
           </p>
-          <div className="flex gap-6 font-label font-semibold">
-            <span>Terms of Service</span>
-            <span>Privacy Policy</span>
-            <span>Archival Rights</span>
-          </div>
+          <p className="font-medium text-ink">
+            Bandung · Jakarta · Depok · Jatinangor · Yogyakarta
+          </p>
         </div>
       </div>
     </footer>

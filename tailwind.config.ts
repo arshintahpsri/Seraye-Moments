@@ -9,35 +9,34 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        cream: "#FBF9F6",
-        sand: "#F3F2EE",
-        stone: "#EBE9E4",
-        line: "#E3E0D9",
-        ink: "#1A1A1A",
-        muted: "#55524C",
+        page: "#F3FCEB",
+        panel: "#ECF4E4",
+        tint: "#EEF8E6",
+        line: "#E8F1E0",
+        ink: "#161E13",
+        body: "#44483F",
+        forest: "#23301C",
         moss: {
           DEFAULT: "#5A7248",
           dark: "#3F5530",
-          soft: "#6A8257",
-        },
-        rose: {
-          DEFAULT: "#7B4A4A",
-          soft: "#FBD9D9",
         },
         mint: "#D4EBC4",
-        honey: {
-          DEFAULT: "#FCE18A",
-          dark: "#6B5A0A",
+        wa: {
+          DEFAULT: "#25D366",
+          dark: "#1DB954",
+        },
+        rose: {
+          DEFAULT: "#8C3B3B",
+          soft: "#FBD9D9",
         },
       },
       fontFamily: {
-        serif: ["var(--font-playfair)", "Georgia", "serif"],
-        sans: ["var(--font-outfit)", "system-ui", "sans-serif"],
-        label: ["var(--font-montserrat)", "system-ui", "sans-serif"],
+        serif: ['"Liberation Serif"', "Georgia", '"Times New Roman"', "serif"],
+        sans: ["var(--font-jakarta)", "system-ui", "sans-serif"],
+        mono: ["ui-monospace", "SFMono-Regular", "Menlo", "Consolas", "monospace"],
       },
       boxShadow: {
-        card: "0 1px 2px rgba(26,26,26,0.04), 0 8px 24px rgba(26,26,26,0.05)",
-        lift: "0 12px 32px rgba(26,26,26,0.12)",
+        card: "0 1px 2px rgba(22,30,19,0.04), 0 8px 24px rgba(22,30,19,0.05)",
       },
     },
   },
