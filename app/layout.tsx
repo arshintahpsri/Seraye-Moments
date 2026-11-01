@@ -1,18 +1,21 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
-import Footer from "@/components/Footer";
+import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
 import Header from "@/components/Header";
 import "./globals.css";
 
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-playfair",
+});
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-jakarta",
 });
 
 export const metadata: Metadata = {
-  title: "Seraye Moments — Dokumentasi Wisuda Outdoor & Event Digital",
+  title: "Seraye Moments — Capture the Moments Worth Keeping",
   description:
-    "Booking sesi foto & video wisuda outdoor langsung via WhatsApp Bisnis. Lihat pricelist, gaya visual, status slot fotografer, dan syarat ketentuan.",
+    "Dokumentasi wisuda outdoor, video reels, dan event. Lihat paket & pricelist, lalu booking sesi langsung via WhatsApp.",
 };
 
 export default function RootLayout({
@@ -21,11 +24,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="id" className={jakarta.variable}>
+    <html lang="id" className={`${playfair.variable} ${jakarta.variable}`}>
       <body>
         <Header />
         <main>{children}</main>
-        <Footer />
       </body>
     </html>
   );

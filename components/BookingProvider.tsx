@@ -4,22 +4,17 @@ import { createContext, useContext, useState, type ReactNode } from "react";
 
 type BookingState = {
   packageId: string;
-  photographerId: string;
   setPackageId: (id: string) => void;
-  setPhotographerId: (id: string) => void;
 };
 
 const BookingContext = createContext<BookingState | null>(null);
 
-/** Menyimpan pilihan paket & fotografer yang dipakai bersama katalog, kurasi, dan formulir booking. */
+/** Menyimpan paket terpilih yang dipakai bersama katalog dan formulir pemesanan. */
 export function BookingProvider({ children }: { children: ReactNode }) {
-  const [packageId, setPackageId] = useState("sejenak");
-  const [photographerId, setPhotographerId] = useState("dimas");
+  const [packageId, setPackageId] = useState("sejenak-photo");
 
   return (
-    <BookingContext.Provider
-      value={{ packageId, photographerId, setPackageId, setPhotographerId }}
-    >
+    <BookingContext.Provider value={{ packageId, setPackageId }}>
       {children}
     </BookingContext.Provider>
   );

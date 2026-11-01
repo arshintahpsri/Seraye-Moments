@@ -1,6 +1,5 @@
 /**
- * Konten halaman, disalin dari frame Figma
- * "Seraye Moments — Direct WhatsApp Business Booking & Portfolio Catalog".
+ * Konten halaman, disalin dari page "Design Fix" (frame "After") di Figma.
  */
 
 export const DP_AMOUNT = 100_000;
@@ -14,436 +13,284 @@ export const WA_NUMBER = process.env.NEXT_PUBLIC_WA_NUMBER ?? "";
 export const waLink = (text = "") =>
   `https://wa.me/${WA_NUMBER}${text ? `?text=${encodeURIComponent(text)}` : ""}`;
 
-export const navLinks = [
-  { href: "#paket", label: "Paket & Pricelist", icon: "tag" },
-  { href: "#gaya-visual", label: "Gaya Visual", icon: "palette" },
-  { href: "#alur", label: "Alur Pemesanan", icon: "split" },
-  { href: "#syarat", label: "Syarat & Ketentuan", icon: "gavel" },
-  { href: "#kampus", label: "Kampus & Kota", icon: "graduation" },
-] as const;
+/** Teks dengan bagian tebal: string biasa = teks, `[teks]` = tebal. */
+export type Rich = readonly (string | readonly [string])[];
 
-/* ---------- Paket ---------- */
-
-export type PackageCategory = "foto" | "video" | "event";
-
-export const categories: { id: PackageCategory; label: string; icon: string }[] = [
-  { id: "foto", label: "Fotografi Wisuda", icon: "camera" },
-  { id: "video", label: "Videografi Wisuda", icon: "video" },
-  { id: "event", label: "Event & Himpunan", icon: "sparkles" },
-];
-
-export type PackageFeature = {
-  icon: "user" | "clock" | "image" | "users" | "drive" | "film";
-  lead: string;
-  rest?: string;
-};
+export type PackageFeature = { icon: string; text: Rich };
 
 export type PhotoPackage = {
   id: string;
-  category: PackageCategory;
+  /** Kode singkat di kartu ringkasan sesi. */
+  code: string;
+  /** Nama di formulir & ringkasan, mis. "Sejenak Photo". */
+  label: string;
   name: string;
+  kind: string;
+  badge: string;
+  badgeTone: "rose" | "forest";
+  image: string;
+  imageAlt: string;
   description: string;
   price: number;
-  normalPrice: number;
-  popular?: boolean;
+  unit: "sesi" | "acara";
+  featured?: boolean;
   features: PackageFeature[];
+  cta: string;
+  ctaIcon: "check" | "heart";
 };
 
-/**
- * Hanya tiga kartu paket yang terlihat di Figma (kartu lain terpotong oleh
- * area geser horizontal). Tambahkan paket lain di sini.
- */
 export const packages: PhotoPackage[] = [
   {
-    id: "sekejap",
-    category: "foto",
+    id: "sekejap-photo",
+    code: "SKJP",
+    label: "Sekejap Photo",
     name: "Sekejap",
-    description:
-      "Sesi wisuda outdoor ringkas, fokus pada momen personal dan potret terbaik.",
+    kind: "Photo Session",
+    badge: "Populer Wisuda",
+    badgeTone: "rose",
+    image: "/images/package-sekejap.jpg",
+    imageAlt: "Wisudawati tersenyum membawa gulungan ijazah di taman kampus",
+    description: "Ideal untuk sesi wisuda solo & foto ringkas bersama keluarga inti.",
     price: 329_000,
-    normalPrice: 350_000,
+    unit: "sesi",
     features: [
-      { icon: "user", lead: "1 Graduate", rest: " (Wisudawan Utama)" },
-      { icon: "clock", lead: "Durasi 60 Menit", rest: " Sesi Outdoor" },
-      { icon: "image", lead: "15 Foto Edit", rest: " High-Resolution" },
-      { icon: "users", lead: "Unlimited People", rest: " (Friends & Family)" },
-      { icon: "drive", lead: "All Raw Photos", rest: " via Google Drive" },
+      { icon: "clock", text: ["Durasi ", ["60 Menit"], " Pemotretan"] },
+      { icon: "wand", text: [["15 Foto Edit"], " Warm Editorial"] },
+      { icon: "users", text: [["Unlimited Teman & Keluarga"]] },
+      { icon: "pin", text: [["Unlimited Spot"], " dalam 1 area"] },
+      { icon: "cloud", text: ["Semua Raw File via Google Drive (H+1)"] },
     ],
+    cta: "Pilih Paket Sekejap",
+    ctaIcon: "check",
   },
   {
-    id: "sejenak",
-    category: "foto",
+    id: "sejenak-photo",
+    code: "SJJP",
+    label: "Sejenak Photo",
     name: "Sejenak",
+    kind: "Photo Session",
+    badge: "Best Value",
+    badgeTone: "forest",
+    image: "/images/package-sejenak.jpg",
+    imageAlt: "Wisudawati melempar buket bersama sahabat di kampus",
     description:
-      "Sesi lebih leluasa untuk eksplor banyak spot kampus bersama teman dan keluarga besar.",
+      "Paling leluasa untuk sesi wisuda komplit bersama sahabat & keluarga besar.",
     price: 429_000,
-    normalPrice: 450_000,
-    popular: true,
+    unit: "sesi",
+    featured: true,
     features: [
-      { icon: "user", lead: "1 Graduate", rest: " (Wisudawan Utama)" },
-      { icon: "clock", lead: "Durasi 90 Menit", rest: " (Lebih Leluasa & Santai)" },
-      { icon: "image", lead: "25 Foto Edit", rest: " High-Resolution" },
-      { icon: "users", lead: "Unlimited People", rest: " (Friends & Family)" },
-      { icon: "drive", lead: "All Raw Photos", rest: " via Google Drive" },
+      { icon: "clock", text: ["Durasi ", ["90 Menit"], " Santai & Bebas Terburu"] },
+      { icon: "wand", text: [["25 Foto Edit Premium"], " Masterpiece"] },
+      { icon: "bulb", text: [["Moodboard Tematik"], " & Directing Pose Salsa"] },
+      { icon: "pin", text: [["Unlimited Spot"], " Berpindah Lokasi"] },
+      { icon: "bolt", text: ["Highlight 5 Foto Teaser dalam ", ["H+2"]] },
     ],
+    cta: "Pilih Paket Sejenak",
+    ctaIcon: "heart",
   },
   {
     id: "sekejap-video",
-    category: "video",
-    name: "Sekejap (Video)",
+    code: "SKJV",
+    label: "Sekejap Video",
+    name: "Sekejap",
+    kind: "Videography",
+    badge: "Reels / TikTok",
+    badgeTone: "rose",
+    image: "/images/package-sekejap-video.jpg",
+    imageAlt: "Wisudawati berjalan di jalan batu sambil direkam videografer",
     description:
-      "Video reels singkat yang estetik dan siap tayang untuk Instagram Reels & TikTok.",
+      "Video estetik berdurasi pendek untuk kenang-kenangan reels & TikTok.",
     price: 250_000,
-    normalPrice: 350_000,
+    unit: "sesi",
     features: [
-      { icon: "user", lead: "1 Graduate", rest: " (Wisudawan Utama)" },
-      { icon: "clock", lead: "Durasi 30 Menit", rest: " Sesi Outdoor" },
-      { icon: "film", lead: "1 Video Edit", rest: " (Portrait/Landscape) 30 Detik" },
-      { icon: "drive", lead: "All Raw Photo & Video Footage", rest: " Google Drive" },
-      { icon: "users", lead: "Unlimited People", rest: " (Friends & Family) + Spot" },
+      { icon: "clock", text: ["Durasi ", ["30 Menit"], " Video Recording"] },
+      { icon: "film", text: [["1 Edited Video (30 Detik)"], " 9:16 Vertical"] },
+      { icon: "music", text: ["Trending Audio / Request Lagu Favorit"] },
+      { icon: "folder", text: ["Semua Raw Video Footage Diberikan"] },
     ],
+    cta: "Pilih Paket Sekejap Video",
+    ctaIcon: "check",
+  },
+  {
+    id: "sejenak-video",
+    code: "SJJV",
+    label: "Sejenak Video",
+    name: "Sejenak",
+    kind: "Videography",
+    badge: "Cinematic Highlight",
+    badgeTone: "rose",
+    image: "/images/package-sejenak-video.jpg",
+    imageAlt: "Videografer merekam wisudawati yang dipeluk ayahnya",
+    description:
+      "Video sinematik lengkap merekam gelak tawa dan haru pelukan orang tersayang.",
+    price: 350_000,
+    unit: "sesi",
+    features: [
+      { icon: "clock", text: ["Durasi ", ["60 Menit"], " Video On-Site"] },
+      { icon: "film", text: [["1 Video Cinematic (60 Detik / 1 Menit)"]] },
+      { icon: "palette", text: ["Cinematic Warm Color Grading & Audio Voiceover"] },
+      { icon: "folder", text: ["All Uncut Raw Footage 4K/60fps"] },
+    ],
+    cta: "Pilih Paket Sejenak Video",
+    ctaIcon: "check",
+  },
+  {
+    id: "semarak-event",
+    code: "SMRK",
+    label: "Semarak Event",
+    name: "Semarak",
+    kind: "Event Dokumentasi",
+    badge: "Foto + Video",
+    badgeTone: "rose",
+    image: "/images/package-semarak.jpg",
+    imageAlt: "Perayaan wisuda dengan balon dan dekorasi bunga",
+    description:
+      "Paket komplit syukuran wisuda, tasyakuran, gathering, atau intimate party.",
+    price: 1_450_000,
+    unit: "acara",
+    features: [
+      { icon: "clock", text: ["Maksimal ", ["180 Menit (3 Jam)"], " Standby"] },
+      { icon: "crew", text: [["1 Fotografer + 1 Videografer"], " On-Site"] },
+      { icon: "gallery", text: [["30 Foto Edit"], " + 1 Video Recap (1–2 Min)"] },
+      {
+        icon: "video",
+        text: ["1 Konten Reels/TikTok + Raw Footage Behind The Scene"],
+      },
+    ],
+    cta: "Pilih Paket Semarak",
+    ctaIcon: "check",
+  },
+  {
+    id: "seremoni-event",
+    code: "SRMN",
+    label: "Seremoni Event",
+    name: "Seremoni",
+    kind: "Event Dokumentasi",
+    badge: "Full Coverage",
+    badgeTone: "rose",
+    image: "/images/package-seremoni.jpg",
+    imageAlt: "Jamuan malam perayaan wisuda di ballroom",
+    description:
+      "Liputan menyeluruh dari awal arak-arakan hingga perayaan malam hari.",
+    price: 1_750_000,
+    unit: "acara",
+    features: [
+      { icon: "clock", text: ["Maksimal ", ["300 Menit (5 Jam)"], " Liputan Penuh"] },
+      { icon: "gallery", text: [["80 Foto Edit"], " Warna Seraye"] },
+      { icon: "film", text: [["2 Video Recap"], " + 2 Konten TikTok/Reels"] },
+      { icon: "archive", text: ["Semua Raw Files Cloud Backup Selama 1 Tahun"] },
+    ],
+    cta: "Pilih Paket Seremoni",
+    ctaIcon: "check",
   },
 ];
 
-export const catalogPerks = [
-  {
-    icon: "users",
-    lead: "Unlimited People:",
-    text: "Boleh ajak sahabat circle, pasangan & keluarga tanpa biaya ekstra.",
-  },
-  {
-    icon: "spot",
-    lead: "Unlimited Spot & Shoot:",
-    text: "Eksplor seluruh spot ikonik kampus selama durasi.",
-  },
-  {
-    icon: "drive",
-    lead: "Google Drive Privat:",
-    text: "High-res archive tersimpan aman hingga 1 tahun.",
-  },
+export const guarantees = [
+  ["H+1:", "Semua file unedited masuk Google Drive."],
+  ["H+3:", "Highlight 5 file edit utama selesai."],
+  ["H+7:", "Seluruh hasil edit resolusi tinggi dikirim tuntas."],
 ] as const;
 
-/* ---------- Gaya visual ---------- */
+/* ---------- Galeri ---------- */
 
-export const visualStyles = [
-  {
-    image: "styleNatural",
-    badge: "Natural Sunlit",
-    badgeTone: "light",
-    kicker: "Signature Style",
-    icon: "sun",
-    title: "Light & Natural",
-    text: "Cerah, hangat, dan natural dengan sentuhan golden hour khas kampus. Menghadirkan warna kulit yang segar serta ambience dedaunan yang lembut.",
-    suited: "Cocok untuk: Sesi Solo & Couple Pagi/Sore",
-    mood: "Warm Tones",
-  },
-  {
-    image: "styleStrobist",
-    badge: "High Contrast & Sharp",
-    badgeTone: "dark",
-    kicker: "Dramatic Outdoor",
-    icon: "zap",
-    title: "Strobist",
-    text: "Pencahayaan dramatis layaknya studio di area outdoor dengan teknik lampu kilat terarah, tajam, dan memisahkan subjek secara elegan dari latar belakang.",
-    suited: "Cocok untuk: Editorial Toga & Gedung Landmark",
-    mood: "Crisp & Punchy",
-  },
-  {
-    image: "styleCandid",
-    badge: "Pure Emotion",
-    badgeTone: "light",
-    kicker: "Genuine Moments",
-    icon: "heart",
-    title: "Candid & Storytelling",
-    text: "Menangkap momen kebahagiaan, tawa spontan, ekspresi natural, dan interaksi emosional bersama sahabat seperjuangan dan orang tua tanpa pose kaku.",
-    suited: "Cocok untuk: Sahabat Circle & Pelukan Keluarga",
-    mood: "Emotional Memory",
-  },
-] as const;
+export type GalleryPhoto = { src: string; alt: string; w: number; h: number };
 
-/* ---------- Fotografer ---------- */
+const g = (n: number, w: number, h: number, alt: string): GalleryPhoto => ({
+  src: `/images/gallery-${String(n).padStart(2, "0")}.jpg`,
+  alt,
+  w,
+  h,
+});
 
-export type SlotState = { kind: "open"; count: number } | { kind: "low"; left: number };
+export const galleryRows: GalleryPhoto[][] = [
+  [
+    g(1, 300, 380, "Wisudawati membawa buket bunga matahari di perpustakaan"),
+    g(2, 420, 380, "Wisudawati berkebaya hijau sage memegang topi toga"),
+    g(3, 320, 380, "Sahabat tertawa bersama di atas tikar dengan foto polaroid"),
+    g(4, 440, 380, "Wisudawati dicium kedua orang tua berbatik"),
+    g(5, 310, 380, "Wisudawan berjubah di bawah lengkung gerbang batu kampus"),
+    g(6, 380, 380, "Sepasang wisudawan berfoto di studio dengan toga"),
+  ],
+  [
+    g(7, 440, 340, "Rombongan wisudawan berjalan di halaman kampus"),
+    g(8, 300, 340, "Wisudawati tersenyum di antara kelopak bunga"),
+    g(9, 390, 340, "Keluarga merayakan kelulusan dengan tumpeng"),
+    g(10, 310, 340, "Wisudawati kedokteran berstetoskop memegang gulungan ijazah"),
+    g(11, 360, 340, "Wisudawati diangkat teman-temannya saat merayakan kelulusan"),
+    g(12, 420, 340, "Siluet wisudawati melempar topi saat matahari terbenam"),
+  ],
+];
 
-export type Photographer = {
-  id: string;
-  name: string;
-  role: string;
+/* ---------- FAQ ---------- */
+
+export type Faq = {
   tag: string;
-  tagTone: "moss" | "dark" | "light";
-  rating: string;
-  clients: string;
-  description: string;
-  morning: SlotState;
-  evening: SlotState;
-  /** Label gaya visual yang dipakai di formulir booking. */
-  visual: string;
+  tone: "leaf" | "rose" | "honey";
+  question: string;
+  answer: Rich;
 };
 
-export const photographers: Photographer[] = [
+export const faqs: Faq[] = [
   {
-    id: "dimas",
-    name: "Kak Dimas K.",
-    role: "Lead Outdoor",
-    tag: "Warm & Natural",
-    tagTone: "moss",
-    rating: "4.9",
-    clients: "420+",
-    description:
-      "Spesialisasi tone hangat, pencahayaan alami kampus pagi, dan framing arsitektur kampus estetis.",
-    morning: { kind: "open", count: 2 },
-    evening: { kind: "low", left: 1 },
-    visual: "Light & Natural",
-  },
-  {
-    id: "aris",
-    name: "Kak Aris R.",
-    role: "Flash Specialist",
-    tag: "Strobist Editorial",
-    tagTone: "dark",
-    rating: "4.9",
-    clients: "380+",
-    description:
-      "Pencahayaan flash studio di outdoor, hasil tajam, punchy, memisahkan toga secara elegan dari background.",
-    morning: { kind: "open", count: 3 },
-    evening: { kind: "open", count: 2 },
-    visual: "Strobist Editorial",
-  },
-  {
-    id: "nanda",
-    name: "Kak Nanda V.",
-    role: "Storyteller",
-    tag: "Candid & Cinematic",
-    tagTone: "light",
-    rating: "5.0",
-    clients: "310+",
-    description:
-      "Menangkap tawa spontan, gesture kehangatan orang tua, dan video reels sinematik micro-story.",
-    morning: { kind: "low", left: 1 },
-    evening: { kind: "open", count: 3 },
-    visual: "Candid & Cinematic",
-  },
-];
-
-export const sessions = [
-  "Pagi Golden Hour (07.00 - 09.00 WIB) - Cahaya Lembut",
-  "Sore Golden Hour (15.30 - 17.30 WIB)",
-];
-
-/* ---------- Alur pemesanan ---------- */
-
-export const orderSteps = [
-  {
-    no: "01",
-    title: "Pilih Paket",
-    text: [
-      "Tentukan paket yang diinginkan: ",
-      ["Sekejap"],
-      ", ",
-      ["Sejenak"],
-      ", atau dokumentasi ",
-      ["Event"],
+    tag: "Pengiriman & File",
+    tone: "leaf",
+    question: "Berapa lama estimasi pengiriman hasil foto & video?",
+    answer: [
+      "Seluruh file unedited (RAW JPEG) diunggah ke Google Drive paling lambat ",
+      ["H+1 malam"],
+      ". Teaser 5 foto highlight terbaik dikirim dalam ",
+      ["H+3"],
+      ", dan seluruh kurasi foto full-retouched resolusi tinggi tuntas dalam ",
+      ["H+7"],
       ".",
     ],
-    foot: "Sesuai Kebutuhan",
-    icon: "checklist",
   },
   {
-    no: "02",
-    title: "Hubungi Admin",
-    text: [
-      "Hubungi admin melalui ",
-      ["WhatsApp"],
-      " untuk cek ketersediaan slot tanggal dan jam sesi kampus Anda.",
+    tag: "Sesi Pemotretan",
+    tone: "rose",
+    question: "Bisa request lokasi outdoor di luar kampus / luar Bandung?",
+    answer: [
+      "Tentu bisa! Area Kota Bandung & Jatinangor (ITB, Unpad, UPI, Telkom, Parahyangan) sudah ",
+      ["bebas biaya transportasi"],
+      ". Untuk sesi luar kota (Jakarta, Bogor, Yogyakarta, dll), berlaku penyesuaian biaya akomodasi & tiket perjalanan.",
     ],
-    foot: "Fast Response WA",
-    icon: "message",
   },
   {
-    no: "03",
-    title: "Pembayaran DP",
-    text: [
-      "Lakukan DP sebesar ",
+    tag: "Fleksibilitas Jadwal",
+    tone: "honey",
+    question: "Bagaimana jika seremonial wisuda molor atau turun hujan?",
+    answer: [
+      "Kami sangat memahami dinamika hari wisuda. Fotografer kami memberikan toleransi penyesuaian jam di hari H. Jika cuaca hujan, sesi dialihkan ke spot koridor teduh semi-outdoor atau cafe terdekat tanpa mengurangi estetika hangat khas Seraye.",
+    ],
+  },
+  {
+    tag: "Pengarahan Gaya",
+    tone: "leaf",
+    question: "Apakah ada arahan gaya/pose (directing) saat sesi pemotretan?",
+    answer: [
+      "Pasti ada! Tim Seraye Moments memandu secara interaktif dan rileks. Tidak ada pose kaku atau intimidatif, kami mengutamakan percakapan hangat, tawa natural, dan gestur spontan yang autentik merefleksikan kebahagiaanmu bersama keluarga.",
+    ],
+  },
+  {
+    tag: "Pendamping & Tamu",
+    tone: "leaf",
+    question: "Bolehkah mengajak keluarga besar dan bestie sahabat?",
+    answer: [
+      "Sangat diperbolehkan! ",
+      ["Tanpa biaya tambahan"],
+      " untuk jumlah anggota keluarga inti maupun sahabat. Foto formasi keluarga, teman satu geng, hingga foto solo personal semuanya sudah tercakup dalam durasi sesi.",
+    ],
+  },
+  {
+    tag: "Pemesanan & Pembayaran",
+    tone: "rose",
+    question: "Bagaimana sistem DP dan pelunasan pembayaran?",
+    answer: [
+      "Cukup DP ",
       ["Rp 100.000"],
-      " melalui admin WhatsApp untuk mengunci jadwal (fix booking).",
-    ],
-    foot: "Slot Terkunci Aman",
-    icon: "lock",
-  },
-  {
-    no: "04",
-    title: "Konfirmasi Jadwal",
-    text: [
-      "Konfirmasi jadwal dan titik kumpul sesi on-location bersama fotografer & admin Seraye.",
-    ],
-    foot: "Briefing Lokasi",
-    icon: "calendar",
-  },
-  {
-    no: "05",
-    title: "Pengiriman Hasil",
-    text: [
-      "Hasil foto & video dikirim via link WhatsApp privat: ",
-      ["H+3 Highlight + Raw"],
-      ", dan ",
-      ["H+7 Full Edited"],
+      " untuk mengunci tanggal dan jam di kalender kami. Bukti booking langsung kami kirimkan via WhatsApp invoice. Pelunasan sisa biaya dapat diselesaikan paling lambat ",
+      ["H-1 acara"],
       ".",
     ],
-    foot: "Google Drive 1 Tahun",
-    icon: "cloud",
-  },
-] as const;
-
-/* ---------- Syarat & ketentuan ---------- */
-
-type Rich = readonly (string | readonly [string])[];
-
-export const terms: {
-  icon: string;
-  title: string;
-  body: Rich[];
-  foot: string;
-  footTone: "rose" | "moss" | "ink";
-}[] = [
-  {
-    icon: "banknote",
-    title: "DP (Booking Fee)",
-    body: [
-      [
-        "Uang muka (DP) sebesar ",
-        ["Rp 100.000"],
-        " diperlukan untuk mengunci jadwal (fix booking). DP bersifat ",
-        ["non-refundable"],
-        " (tidak dapat dikembalikan atau hangus jika dibatalkan oleh pihak klien).",
-      ],
-    ],
-    foot: "Non-Refundable • Fix Booking",
-    footTone: "rose",
-  },
-  {
-    icon: "calendarCheck",
-    title: "Pelunasan H-1",
-    body: [
-      [
-        "Pelunasan sisa biaya paket wajib diselesaikan selambat-lambatnya ",
-        ["H-1 (satu hari sebelum sesi dimulai)"],
-        " melalui konfirmasi transfer rekening resmi yang diberikan admin.",
-      ],
-    ],
-    foot: "Maksimal H-1 Sesi Foto",
-    footTone: "moss",
-  },
-  {
-    icon: "history",
-    title: "Kebijakan Reschedule",
-    body: [
-      [
-        "Perubahan jadwal (reschedule) hanya diperbolehkan ",
-        ["maksimal 1 kali"],
-        ", dengan konfirmasi minimal ",
-        ["H-3 (tiga hari sebelum sesi)"],
-        " dan tergantung ketersediaan slot fotografer.",
-      ],
-    ],
-    foot: "Maks. 1× • Konfirmasi Min. H-3",
-    footTone: "ink",
-  },
-  {
-    icon: "hourglass",
-    title: "Ketentuan Keterlambatan",
-    body: [
-      [
-        "Keterlambatan dari pihak klien yang melebihi ",
-        ["15 menit"],
-        " dari jam janjian akan ",
-        ["memotong total durasi sesi"],
-        " yang tersisa demi menjaga jadwal klien wisuda berikutnya.",
-      ],
-    ],
-    foot: "Toleransi 15 Menit Awal",
-    footTone: "rose",
-  },
-  {
-    icon: "truck",
-    title: "Estimasi Pengiriman Hasil",
-    body: [
-      [
-        "• ",
-        ["H+3:"],
-        " Pengiriman 5 foto highlight + seluruh Raw file via Google Drive privat.",
-      ],
-      [
-        "• ",
-        ["H+7:"],
-        " Pengiriman sisa seluruh hasil editan resolusi penuh + bonus video/recap.",
-      ],
-    ],
-    foot: "H+3 Highlight • H+7 Full Edit",
-    footTone: "moss",
-  },
-  {
-    icon: "gavel",
-    title: "Add-On & Hak Cipta",
-    body: [
-      ["• ", ["Add-On Foto Edit:"], " Rp 10.000 / foto tambahan."],
-      [
-        "• ",
-        ["Hak Publikasi:"],
-        " Seraye berhak menggunakan karya untuk portofolio & promosi.",
-      ],
-      [
-        "• ",
-        ["Persetujuan:"],
-        " Pembayaran DP dianggap sebagai persetujuan penuh atas seluruh ketentuan di atas.",
-      ],
-    ],
-    foot: "DP = Persetujuan Resmi S&K",
-    footTone: "ink",
   },
 ];
-
-/* ---------- Kampus ---------- */
-
-export const campuses = [
-  { image: "campusBandung", city: "Bandung", note: "Tel-U & ITB Ganesha", tone: "from-[#5E7A5A] to-[#26382A]" },
-  { image: "campusJakarta", city: "Jakarta & Depok", note: "Universitas Indonesia", tone: "from-[#6C8A7C] to-[#2A3F37]" },
-  { image: "campusJatinangor", city: "Jatinangor", note: "Unpad & ITB Jatinangor", tone: "from-[#7E8F62] to-[#34422A]" },
-  { image: "campusYogyakarta", city: "Yogyakarta", note: "UGM Bulaksumur", tone: "from-[#8A8466] to-[#3C3A28]" },
-] as const;
-
-export const campusOptions = [
-  "Telkom University (Bandung)",
-  "ITB Ganesha (Bandung)",
-  "Universitas Indonesia (Depok)",
-  "Unpad & ITB Jatinangor",
-  "UGM Bulaksumur (Yogyakarta)",
-];
-
-/* ---------- Footer ---------- */
-
-export const footerColumns = [
-  {
-    title: "Katalog & Informasi",
-    items: [
-      "Paket Foto Sekejap & Sejenak",
-      "Paket Video Reels & Sinematik",
-      "Dokumentasi Event Semarak & Seremoni",
-      "Gaya Visual (Light, Strobist, Candid)",
-      "5 Langkah Pemesanan WhatsApp",
-    ],
-  },
-  {
-    title: "Titik Temu Kampus",
-    items: ["Telkom University (Gedung TULT & Danau Galau)"],
-  },
-  {
-    title: "Syarat & Ketentuan",
-    items: [
-      "Ketentuan DP Rp 100.000",
-      "Pelunasan H-1 Sesi",
-      "Kebijakan Reschedule H-3",
-      "Toleransi Keterlambatan 15 Menit",
-      "Estimasi H+3 & H+7",
-    ],
-  },
-] as const;

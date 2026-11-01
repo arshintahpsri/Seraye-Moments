@@ -1,11 +1,11 @@
-type Segment = string | readonly [string];
+import type { Rich as RichText } from "@/lib/data";
 
 /** Merender teks dengan bagian tebal: string biasa = teks, `[teks]` = tebal. */
 export default function Rich({
   parts,
   strongClass = "text-ink",
 }: {
-  parts: readonly Segment[];
+  parts: RichText;
   strongClass?: string;
 }) {
   return (

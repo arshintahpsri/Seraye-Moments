@@ -1,8 +1,7 @@
 # Seraye Moments — Front End
 
-Front end Next.js (App Router, TypeScript, Tailwind CSS 3) dari desain Figma
-"Seraye Moments — Direct WhatsApp Business Booking & Portfolio Catalog"
-(page **Akan Dikerjakan**).
+Front end Next.js (App Router, TypeScript, Tailwind CSS 3) dari desain Figma,
+page **Design Fix** (frame **After**).
 
 ## Menjalankan
 
@@ -21,40 +20,29 @@ Tanpa nilai ini, WhatsApp dibuka tanpa kontak tujuan.
 
 ## Halaman
 
-Satu halaman (`/`) dengan section berikut, urut dari atas:
+Satu halaman (`/`), urut dari atas:
 
-| Anchor        | Section                                  |
-| ------------- | ---------------------------------------- |
-| `#paket`      | Pilihan Paket Wisuda & Event (pricelist) |
-| `#gaya-visual`| Gaya Visual & Portofolio                 |
-| —             | Kurasi Fotografer & Status Slot          |
-| `#alur`       | Alur Pemesanan                           |
-| `#syarat`     | Syarat & Ketentuan                       |
-| `#kampus`     | Find Us In Your Campus & City            |
-| `#booking`    | Lacak Status + Quick Booking WhatsApp    |
+| Anchor        | Section                                          |
+| ------------- | ------------------------------------------------ |
+| —             | Hero "Capture the moments worth keeping."        |
+| `#paket`      | Find the Perfect Package for Your Moment (6 paket, geser horizontal) |
+| `#booking`    | Formulir Pemesanan Sesi + Ringkasan Sesi         |
+| `#portofolio` | Moments Worth Remembering (2 baris galeri geser) |
+| `#faq`        | Pertanyaan yang Sering Diajukan                  |
 
 ## Struktur
 
-- `app/` — layout (font Plus Jakarta Sans via `next/font`) dan halaman.
-- `components/` — satu komponen per section, plus `Header`, `Footer`,
-  `BookingProvider` (pilihan paket & fotografer dipakai bersama katalog,
-  kurasi, dan formulir booking).
-- `lib/data.ts` — seluruh konten (paket, fotografer, langkah, ketentuan, dst.).
-- `lib/images.ts` — peta gambar ke `public/images/`.
-
-## Mengganti foto
-
-1. Ekspor gambar dari Figma ke `public/images/`.
-2. Ubah path-nya di `lib/images.ts`. Nilai `null` menampilkan placeholder gradien.
-
-Foto gaya visual (`style-*.jpg`, 3x) dan kampus (`campus-*.jpg`, 3x) sudah
-diekspor dari Figma.
+- `app/` — layout (font Playfair Display & Plus Jakarta Sans via `next/font`) dan halaman.
+- `components/` — satu komponen per section; `BookingProvider` menyimpan paket
+  terpilih yang dipakai bersama katalog dan formulir.
+- `lib/data.ts` — seluruh konten (paket, galeri, FAQ, harga, DP).
+- `public/images/` — foto yang diekspor dari Figma (`hero`, `logo`, `package-*`, `gallery-*`).
 
 ## Catatan
 
-- Heading memakai serif sistem (Liberation Serif/Georgia) sesuai desain Figma;
-  teks lain Plus Jakarta Sans.
-- Hanya tiga kartu paket yang terlihat di Figma (sisanya terpotong area geser).
-  Tambahkan paket lain di `packages` pada `lib/data.ts`.
-- Formulir booking membuka WhatsApp dengan draf pesan otomatis. "Lacak Status"
-  masih memakai data contoh (tanpa backend).
+- Judul hero dan pertanyaan FAQ memakai serif sistem (Liberation Serif/Times)
+  seperti yang tampil di Figma; judul section lain memakai Playfair Display.
+- Foto paket 4–6 dan galeri 4, 5, 6, 10, 11, 12 terpotong di Figma, jadi
+  diambil dari gambar aslinya dan dipotong ulang sesuai ukuran kartu.
+- Formulir membuka WhatsApp dengan draf pesan otomatis; DP Rp 100.000, sisa
+  pelunasan dihitung dari harga paket.
